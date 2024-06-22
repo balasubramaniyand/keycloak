@@ -1,0 +1,43 @@
+postgres-1  |
+postgres-1  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+postgres-1  |
+postgres-1  | 2024-06-22 12:16:06.665 UTC [1] LOG:  starting PostgreSQL 16.3 (Debian 16.3-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+postgres-1  | 2024-06-22 12:16:06.665 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1  | 2024-06-22 12:16:06.665 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1  | 2024-06-22 12:16:06.674 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2024-06-22 12:16:06.684 UTC [28] LOG:  database system was shut down at 2024-06-22 12:15:39 UTC
+postgres-1  | 2024-06-22 12:16:06.693 UTC [1] LOG:  database system is ready to accept connections
+keycloak-1  | 2024-06-22 12:16:07,640 WARN  [org.keycloak.quarkus.runtime.cli.Picocli] (main) The following used options or option values are DEPRECATED and will be removed or their behaviour changed in a future release:
+keycloak-1  |   - hostname
+keycloak-1  | Consult the Release Notes for details.
+keycloak-1  | 2024-06-22 12:16:11,115 INFO  [org.infinispan.CONTAINER] (ForkJoinPool.commonPool-worker-1) ISPN000556: Starting user marshaller 'org.infinispan.jboss.marshalling.core.JBossUserMarshaller'
+keycloak-1  | 2024-06-22 12:16:11,364 INFO  [org.infinispan.CLUSTER] (ForkJoinPool.commonPool-worker-1) ISPN000088: Unable to use any JGroups configuration mechanisms provided in properties {}. Using default JGroups configuration!
+keycloak-1  | 2024-06-22 12:16:11,552 INFO  [org.infinispan.CLUSTER] (ForkJoinPool.commonPool-worker-1) ISPN000078: Starting JGroups channel `ISPN`
+keycloak-1  | 2024-06-22 12:16:11,554 INFO  [org.jgroups.JChannel] (ForkJoinPool.commonPool-worker-1) local_addr: 0ebf6016-1c06-46a6-97da-1f4c9a02bfc0, name: 0d09d7aa9a93-24853
+keycloak-1  | 2024-06-22 12:16:11,561 WARN  [org.jgroups.protocols.UDP] (ForkJoinPool.commonPool-worker-1) JGRP000015: the send buffer of socket MulticastSocket was set to 1MB, but the OS only allocated 212.99KB
+keycloak-1  | 2024-06-22 12:16:11,561 WARN  [org.jgroups.protocols.UDP] (ForkJoinPool.commonPool-worker-1) JGRP000015: the receive buffer of socket MulticastSocket was set to 20MB, but the OS only allocated 212.99KB
+keycloak-1  | 2024-06-22 12:16:11,562 WARN  [org.jgroups.protocols.UDP] (ForkJoinPool.commonPool-worker-1) JGRP000015: the send buffer of socket MulticastSocket was set to 1MB, but the OS only allocated 212.99KB
+keycloak-1  | 2024-06-22 12:16:11,562 WARN  [org.jgroups.protocols.UDP] (ForkJoinPool.commonPool-worker-1) JGRP000015: the receive buffer of socket MulticastSocket was set to 25MB, but the OS only allocated 212.99KB
+keycloak-1  | 2024-06-22 12:16:11,569 INFO  [org.jgroups.protocols.FD_SOCK2] (ForkJoinPool.commonPool-worker-1) server listening on *.33934
+keycloak-1  | 2024-06-22 12:16:13,124 INFO  [org.keycloak.quarkus.runtime.storage.legacy.liquibase.QuarkusJpaUpdaterProvider] (main) Initializing database schema. Using changelog META-INF/jpa-changelog-master.xml
+keycloak-1  | 2024-06-22 12:16:13,582 INFO  [org.jgroups.protocols.pbcast.GMS] (ForkJoinPool.commonPool-worker-1) 0d09d7aa9a93-24853: no members discovered after 2003 ms: creating cluster as coordinator
+keycloak-1  | 2024-06-22 12:16:13,590 INFO  [org.infinispan.CLUSTER] (ForkJoinPool.commonPool-worker-1) ISPN000094: Received new cluster view for channel ISPN: [0d09d7aa9a93-24853|0] (1) [0d09d7aa9a93-24853]
+keycloak-1  | 2024-06-22 12:16:13,621 INFO  [org.infinispan.CLUSTER] (ForkJoinPool.commonPool-worker-1) ISPN000079: Channel `ISPN` local address is `0d09d7aa9a93-24853`, physical addresses are `[172.23.0.3:49470]`
+keycloak-1  |
+keycloak-1  | UPDATE SUMMARY
+keycloak-1  | Run:                        133
+keycloak-1  | Previously run:               0
+keycloak-1  | Filtered out:                 0
+keycloak-1  | -------------------------------
+keycloak-1  | Total change sets:          133
+keycloak-1  |
+keycloak-1  | 2024-06-22 12:16:15,821 INFO  [org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory] (main) Node name: 0d09d7aa9a93-24853, Site name: null
+keycloak-1  | 2024-06-22 12:16:15,937 INFO  [org.keycloak.broker.provider.AbstractIdentityProviderMapper] (main) Registering class org.keycloak.broker.provider.mappersync.ConfigSyncEventListener
+keycloak-1  | 2024-06-22 12:16:16,021 INFO  [org.keycloak.services] (main) KC-SERVICES0050: Initializing master realm
+keycloak-1  | 2024-06-22 12:16:17,642 INFO  [org.infinispan.CLUSTER] (main) ISPN000080: Disconnecting JGroups channel `ISPN`
+keycloak-1  | 2024-06-22 12:16:17,656 INFO  [com.arjuna.ats.jbossatx] (main) ARJUNA032014: Stopping transaction recovery manager
+keycloak-1  | 2024-06-22 12:16:17,905 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Failed to start server in (production) mode
+keycloak-1  | 2024-06-22 12:16:17,905 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Cannot set quarkus.http.insecure-requests without enabling SSL.
+keycloak-1  | 2024-06-22 12:16:17,905 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) For more details run the same command passing the '--verbose' option. Also you can use '--help' to see the details about the usage of the particular command.
+keycloak-1 exited with code 1
+
