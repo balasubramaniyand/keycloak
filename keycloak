@@ -1,0 +1,16 @@
+root@opexwise-ui-demo:/var/opt/sso1# docker exec -it 64751b145b58 /bin/bash
+bash-5.1$ ls
+afs  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+bash-5.1$ pwd
+/
+bash-5.1$ cd
+bash-5.1$ pwd
+/opt/keycloak
+bash-5.1$ cd bin
+bash-5.1$ ls
+client  federation-sssd-setup.sh  kcadm.bat  kcadm.sh  kc.bat  kcreg.bat  kcreg.sh  kc.sh
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin --password admin
+Logging into http://localhost:8080 as user admin of realm master
+Invalid user credentials [invalid_grant]
+bash-5.1$ clea
+
