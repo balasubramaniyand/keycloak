@@ -1,0 +1,16 @@
+# Use the official Keycloak image from Quay
+FROM quay.io/keycloak/keycloak:22.0.0
+
+# Set environment variables for Keycloak admin user and password
+ENV KEYCLOAK_ADMIN=admin
+ENV KEYCLOAK_ADMIN_PASSWORD=admin
+
+# Expose ports for HTTP and HTTPS (if configured)
+EXPOSE 8080
+# EXPOSE 8443
+
+# Set the entry point to run Keycloak with the provided environment variables
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev", "--http-port=8080"]
+
+# Optionally, for production setup, use the following command to run Keycloak
+# ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--http-port=8080", "--hostname=<your-hostname>"]
