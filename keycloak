@@ -1,6 +1,4 @@
-root@opexwise-ui-demo:/var/opt/sso1# docker exec -it 64751b145b58 /bin/bash
-bash-5.1$ ls
-afs  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@opexwise-ui-demo:/var/opt/sso1# docker exec -it 1048920f850a /bin/bash
 bash-5.1$ pwd
 /
 bash-5.1$ cd
@@ -9,8 +7,22 @@ bash-5.1$ pwd
 bash-5.1$ cd bin
 bash-5.1$ ls
 client  federation-sssd-setup.sh  kcadm.bat  kcadm.sh  kc.bat  kcreg.bat  kcreg.sh  kc.sh
-bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin --password admin
-Logging into http://localhost:8080 as user admin of realm master
-Invalid user credentials [invalid_grant]
-bash-5.1$ clea
-
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin
+Logging into http://localhost:8080/auth as user admin of realm master
+Enter password: *****
+For more on this error consult the server log at the debug level. [Unable to find matching target resource method]
+bash-5.1$ ./kcadm.sh update realms/master -s sslRequired=NONE
+No server specified. Use --server, or 'kcadm.sh config credentials or connection'.
+bash-5.1$ ls
+client  federation-sssd-setup.sh  kcadm.bat  kcadm.sh  kc.bat  kcreg.bat  kcreg.sh  kc.sh
+bash-5.1$
+bash-5.1$
+bash-5.1$ ./kcadm.sh update realms/master -s sslRequired=NONE
+No server specified. Use --server, or 'kcadm.sh config credentials or connection'.
+bash-5.1$ pwd
+/opt/keycloak/bin
+bash-5.1$ ./standalone.sh -b 0.0.0.0
+bash: ./standalone.sh: No such file or directory
+bash-5.1$ ls
+client  federation-sssd-setup.sh  kcadm.bat  kcadm.sh  kc.bat  kcreg.bat  kcreg.sh  kc.sh
+bash-5.1$
