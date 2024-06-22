@@ -1,3 +1,6 @@
+root@opexwise-ui-demo:/var/opt/sso1# docker-compose down
+services.keycloak.environment.[12]: unexpected type map[string]interface {}
+root@opexwise-ui-demo:/var/opt/sso1# cat docker-compose.yml
 version: "3"
 
 services:
@@ -26,12 +29,15 @@ services:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
       - KEYCLOAK_CORS=true
-      - QUARKUS_HTTP_INSECURE_REQUESTS=true  # Disables SSL requirement for insecure requests
+        #- QUARKUS_HTTP_INSECURE_REQUESTS=true  # Disables SSL requirement for insecure requests
+      - KEYCLOAK_NO_SSL=ture
+      - JDBC_PARAMS: "ssl=true"
     ports:
       - "8008:8080"
     depends_on:
       - postgres
-    entrypoint: ["/opt/keycloak/bin/kc.sh", "start", "--dev"]  # Start in development mode
+    entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev"]  # Start in development mode
 
 volumes:
   pg_data:
+root@opexwise-ui-demo:/var/opt/sso1#
