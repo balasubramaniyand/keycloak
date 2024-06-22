@@ -1,0 +1,38 @@
+Login as 'admin' user of 'master' realm to a local Keycloak server running on default port.
+You will be prompted for a password:
+  $ kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin
+
+Login to Keycloak server at non-default endpoint passing the password via standard input:
+  $ kcadm.sh config credentials --server http://localhost:9080 --realm master --user admin << EOF
+  mypassword
+  EOF
+
+Login specifying a password through command line:
+  $ kcadm.sh config credentials --server http://localhost:9080 --realm master --user admin --password $PASSWORD
+
+Login using a client service account of a custom client. You will be prompted for a client secret:
+  $ kcadm.sh config credentials --server http://localhost:9080 --realm master --client reg-cli
+
+Login using a client service account of a custom client, authenticating with signed JWT.
+You will be prompted for a keystore password, and a key password:
+  $ kcadm.sh config credentials --server http://localhost:9080 --realm master --client reg-cli --keystore ~/.keycloak/keystore.jks
+
+Login as 'user' while also authenticating a custom client with signed JWT.
+You will be prompted for a user password, a keystore password, and a key password:
+  $ kcadm.sh config credentials --server http://localhost:9080 --realm master --user user --client reg-cli --keystore ~/.keycloak/keystore.jks
+
+
+Use 'kcadm.sh help' for general information and a list of commands
+
+bash-5.1$ kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin
+
+bash: kcadm.sh: command not found
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin
+Logging into http://localhost:8080 as user admin of realm master
+Enter password:
+Invalid user credentials [invalid_grant]
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin
+Logging into http://localhost:8080 as user admin of realm master
+Enter password:
+Invalid user credentials [invalid_grant]
+bash-5.1$
