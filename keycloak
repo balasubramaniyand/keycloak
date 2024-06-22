@@ -1,36 +1,40 @@
-root@opexwise-ui-demo:/var/opt/sso1# docker exec -it 1048920f850a /bin/bash
-bash-5.1$ pwd
-/
-bash-5.1$ cd
-bash-5.1$ pwd
-/opt/keycloak
-bash-5.1$ cd bin
-bash-5.1$ ls
-client  federation-sssd-setup.sh  kcadm.bat  kcadm.sh  kc.bat  kcreg.bat  kcreg.sh  kc.sh
-bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin
-Logging into http://localhost:8080/auth as user admin of realm master
-Enter password: *****
-For more on this error consult the server log at the debug level. [Unable to find matching target resource method]
-bash-5.1$ ./kcadm.sh update realms/master -s sslRequired=NONE
-No server specified. Use --server, or 'kcadm.sh config credentials or connection'.
-bash-5.1$ ls
-client  federation-sssd-setup.sh  kcadm.bat  kcadm.sh  kc.bat  kcreg.bat  kcreg.sh  kc.sh
-bash-5.1$
-bash-5.1$
-bash-5.1$ ./kcadm.sh update realms/master -s sslRequired=NONE
-No server specified. Use --server, or 'kcadm.sh config credentials or connection'.
-bash-5.1$ pwd
-/opt/keycloak/bin
-bash-5.1$ ./standalone.sh -b 0.0.0.0
-bash: ./standalone.sh: No such file or directory
-bash-5.1$ ls
-client  federation-sssd-setup.sh  kcadm.bat  kcadm.sh  kc.bat  kcreg.bat  kcreg.sh  kc.sh
-bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin
-Logging into http://localhost:8080/auth as user admin of realm master
-For more on this error consult the server log at the debug level. [Unable to find matching target resource method]
-bash-5.1$ ./kcadm.sh update realms/master -s sslRequired=NONE
-No server specified. Use --server, or 'kcadm.sh config credentials or connection'.
-bash-5.1$ ./kcadm.sh update realms/master -s sslRequired=NONE --server http://localhost:8080/auth --realm master --user admin --password admin
-Logging into http://localhost:8080/auth as user admin of realm master
-For more on this error consult the server log at the debug level. [Unable to find matching target resource method]
-bash-5.1$
+root@opexwise-ui-demo:/var/opt/sso1# vi docker-compose.yml
+root@opexwise-ui-demo:/var/opt/sso1# docker-compose up -d
+yaml: line 2: did not find expected key
+root@opexwise-ui-demo:/var/opt/sso1# cat docker-compose.yml
+version: '3'
+services:
+  postgres:
+      image: postgres:16
+      ports:
+        - 4002:5432
+      volumes:
+        - ./pg_data:/var/lib/postgresql/data
+      environment:
+        POSTGRES_DB: keycloak
+        POSTGRES_USER: iopex
+        POSTGRES_PASSWORD: password
+  keycloak:
+       image: keycloak/keycloak:latest
+      environment:
+        KEYCLOAK_FRONTEND_URL: http://13.126.219.64:8008/auth
+        PROXY_ADDRESS_FORWARDING: "true"
+        DB_VENDOR: POSTGRES
+        DB_ADDR: postgres
+        DB_DATABASE: keycloak
+        DB_USER: iopex
+        DB_SCHEMA: public
+        DB_PASSWORD: password
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: admin
+        KEYCLOAK_CORS: "true"
+        # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+        #JDBC_PARAMS: "ssl=true"
+      ports:
+        - 8008:8080
+      depends_on:
+        - postgres
+      #command: ["start-dev"]
+
+root@opexwise-ui-demo:/var/opt/sso1#
+
