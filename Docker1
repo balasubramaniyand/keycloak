@@ -1,43 +1,108 @@
-root@opexwise-ui-demo:/var/opt/sso1# docker-compose down
-services.keycloak.environment.[12]: unexpected type map[string]interface {}
-root@opexwise-ui-demo:/var/opt/sso1# cat docker-compose.yml
-version: "3"
+bash-5.1$ cd
+bash-5.1$ pwd
+/opt/keycloak
+bash-5.1$ cd
+bash-5.1$ ls
+bin  conf  data  lib  LICENSE.txt  providers  README.md  themes  version.txt
+bash-5.1$ pwd
+/opt/keycloak
+bash-5.1$ ls
+bin  conf  data  lib  LICENSE.txt  providers  README.md  themes  version.txt
+bash-5.1$ cd bin
+bash-5.1$ ls
+client  federation-sssd-setup.sh  kcadm.bat  kcadm.sh  kc.bat  kcreg.bat  kcreg.sh  kc.sh
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin
+Logging into http://localhost:8080/auth as user admin of realm master
+Enter password:
+For more on this error consult the server log at the debug level. [Unable to find matching target resource method]
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin
+Logging into http://localhost:8080/auth as user admin of realm master
+Enter password:
+For more on this error consult the server log at the debug level. [Unable to find matching target resource method]
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin
+Logging into http://localhost:8080/auth as user admin of realm master
+Enter password:
+For more on this error consult the server log at the debug level. [Unable to find matching target resource method]
+bash-5.1$ ./kcadm.sh update realms/master -s sslRequired=NONE
+No server specified. Use --server, or 'kcadm.sh config credentials'.
+bash-5.1$ ./kcadm.sh config credentials
+Usage: kcadm.sh config credentials --server SERVER_URL --realm REALM [ARGUMENTS]
+       kcadm.sh config credentials --server SERVER_URL --realm REALM --user USER [--password PASSWORD] [ARGUMENTS]
+       kcadm.sh config credentials --server SERVER_URL --realm REALM --client CLIENT_ID [--secret SECRET] [ARGUMENTS]
+       kcadm.sh config credentials --server SERVER_URL --realm REALM --client CLIENT_ID [--keystore KEYSTORE] [ARGUMENTS]
 
-services:
-  postgres:
-    image: postgres:16
-    ports:
-      - "5431:5432"
-    volumes:
-      - pg_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: lopex
-      POSTGRES_PASSWORD: password
+Command to establish an authenticated client session with the server. There are many authentication
+options available, and it depends on server side client authentication configuration how client can or should authenticate.
+The information always required includes --server, and --realm. Then, --user and / or --client need to be used to authenticate.
+If --client is not provided it defaults to 'admin-cli'. The authentication options / requirements depend on how this client is configured.
 
-  keycloak:
-    image: quay.io/keycloak/keycloak:latest
-    environment:
-      - KEYCLOAK_FRONTEND_URL=http://13.126.219.64:8008/auth
-      - PROXY_ADDRESS_FORWARDING=true
-      - DB_VENDOR=postgres
-      - DB_ADDR=postgres
-      - DB_DATABASE=keycloak
-      - DB_USER=lopex
-      - DB_SCHEMA=public
-      - DB_PASSWORD=password
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
-      - KEYCLOAK_CORS=true
-        #- QUARKUS_HTTP_INSECURE_REQUESTS=true  # Disables SSL requirement for insecure requests
-      - KEYCLOAK_NO_SSL=ture
-      - JDBC_PARAMS: "ssl=true"
-    ports:
-      - "8008:8080"
-    depends_on:
-      - postgres
-    entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev"]  # Start in development mode
+If confidential client authentication is also configured, you may have to specify a client id, and client credentials in addition to
+user credentials. Client credentials are either a client secret, or a keystore information to use Signed JWT mechanism.
+If only client credentials are provided, and no user credentials, then the service account is used for login.
 
-volumes:
-  pg_data:
-root@opexwise-ui-demo:/var/opt/sso1#
+Arguments:
+
+  Global options:
+    -x                      Print full stack trace when exiting with error
+    --config                Path to a config file (/opt/keycloak/.keycloak/kcadm.config by default)
+    --truststore PATH       Path to a truststore containing trusted certificates
+    --trustpass PASSWORD  Truststore password (prompted for if not specified, --truststore is used, and the KC_CLI_TRUSTSTORE_PASSWORD env property is not defined)
+
+  Command specific options:
+    --server SERVER_URL     Server endpoint url (e.g. 'http://localhost:8080')
+    --realm REALM           Realm name to use
+    --user USER             Username to login with
+    --password PASSWORD     Password to login with (prompted for if not specified, --user is used, and the env variable KC_CLI_PASSWORD is not defined)
+    --client CLIENT_ID      ClientId used by this client tool ('admin-cli' by default)
+    --secret SECRET         Secret to authenticate the client (prompted for if no --user nor --keystore is specified, and the env variable KC_CLI_CLIENT_SECRET is not defined)
+    --keystore PATH         Path to a keystore containing private key
+    --storepass PASSWORD    Keystore password (prompted for if not specified, --keystore is used, and the env variable KC_CLI_STORE_PASSWORD)
+    --keypass PASSWORD      Key password (prompted for if not specified, --keystore is used without --storepass, and KC_CLI_KEY_PASSWORD
+                            otherwise defaults to keystore password)
+    --alias ALIAS           Alias of the key inside a keystore (defaults to the value of ClientId)
+
+
+Examples:
+
+Login as 'admin' user of 'master' realm to a local Keycloak server running on default port.
+You will be prompted for a password:
+  $ kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin
+
+Login to Keycloak server at non-default endpoint passing the password via standard input:
+  $ kcadm.sh config credentials --server http://localhost:9080 --realm master --user admin << EOF
+  mypassword
+  EOF
+
+Login specifying a password through command line:
+  $ kcadm.sh config credentials --server http://localhost:9080 --realm master --user admin --password $PASSWORD
+
+Login using a client service account of a custom client. You will be prompted for a client secret:
+  $ kcadm.sh config credentials --server http://localhost:9080 --realm master --client reg-cli
+
+Login using a client service account of a custom client, authenticating with signed JWT.
+You will be prompted for a keystore password, and a key password:
+  $ kcadm.sh config credentials --server http://localhost:9080 --realm master --client reg-cli --keystore ~/.keycloak/keystore.jks
+
+Login as 'user' while also authenticating a custom client with signed JWT.
+You will be prompted for a user password, a keystore password, and a key password:
+  $ kcadm.sh config credentials --server http://localhost:9080 --realm master --user user --client reg-cli --keystore ~/.keycloak/keystore.jks
+
+
+Use 'kcadm.sh help' for general information and a list of commands
+
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:9080 --realm master --user admin --password $PASSWORD~
+Logging into http://localhost:9080 as user admin of realm master
+Failed to send request - Connect to localhost:9080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin --password $PASSWORD~
+Logging into http://localhost:8080 as user admin of realm master
+Invalid user credentials [invalid_grant]
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin --pass./add-user-keycloak.sh --server http://ip_address_of_the_server:8080/admin --realm master --user admin --password adminPasswordword $PASSWORD~
+option '--server' (<server>) should be specified only once
+Try 'kcadm.sh config credentials --help' for more information on the available options.
+bash-5.1$ ./kcadm.sh config credentials --server http://13.126.219.64:8080 --realm master --user admin --pass./add-user-keycloak.sh --server http://ip_address_of_the_server:8080/admin --realm master --user admin --password adminPasswordword $PASSWORD~
+option '--server' (<server>) should be specified only once
+Try 'kcadm.sh config credentials --help' for more information on the available options.
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8008 --realm master --user admin --pass./add-user-keycloak.sh --server http://ip_address_of_the_server:8080/admin --realm master --user admin --password adminPasswordword $PASSWORD
+option '--server' (<server>) should be specified only once
+Try 'kcadm.sh config credentials --help' for more information on the available options.
+bash-5.1$
