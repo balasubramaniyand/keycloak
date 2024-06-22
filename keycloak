@@ -25,4 +25,12 @@ bash-5.1$ ./standalone.sh -b 0.0.0.0
 bash: ./standalone.sh: No such file or directory
 bash-5.1$ ls
 client  federation-sssd-setup.sh  kcadm.bat  kcadm.sh  kc.bat  kcreg.bat  kcreg.sh  kc.sh
+bash-5.1$ ./kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin
+Logging into http://localhost:8080/auth as user admin of realm master
+For more on this error consult the server log at the debug level. [Unable to find matching target resource method]
+bash-5.1$ ./kcadm.sh update realms/master -s sslRequired=NONE
+No server specified. Use --server, or 'kcadm.sh config credentials or connection'.
+bash-5.1$ ./kcadm.sh update realms/master -s sslRequired=NONE --server http://localhost:8080/auth --realm master --user admin --password admin
+Logging into http://localhost:8080/auth as user admin of realm master
+For more on this error consult the server log at the debug level. [Unable to find matching target resource method]
 bash-5.1$
