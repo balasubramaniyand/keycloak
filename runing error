@@ -1,0 +1,24 @@
+root@opexwise-ui-demo:/var/opt/sso1# docker-compose logs -f
+WARN[0000] /var/opt/sso1/docker-compose.yml: `version` is obsolete
+postgres-1  |
+postgres-1  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+postgres-1  |
+postgres-1  | 2024-06-22 11:27:54.025 UTC [1] LOG:  starting PostgreSQL 16.3 (Debian 16.3-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+postgres-1  | 2024-06-22 11:27:54.025 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1  | 2024-06-22 11:27:54.025 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1  | 2024-06-22 11:27:54.036 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2024-06-22 11:27:54.049 UTC [29] LOG:  database system was shut down at 2024-06-22 11:27:48 UTC
+postgres-1  | 2024-06-22 11:27:54.058 UTC [1] LOG:  database system is ready to accept connections
+keycloak-1  | Changes detected in configuration. Updating the server image.
+keycloak-1  | Updating the configuration and installing your custom providers, if any. Please wait.
+keycloak-1  | 2024-06-22 11:28:04,328 INFO  [io.qua.dep.QuarkusAugmentor] (main) Quarkus augmentation completed in 8375ms
+keycloak-1  | Server configuration updated and persisted. Run the following command to review the configuration:
+keycloak-1  |
+keycloak-1  |   kc.sh show-config
+keycloak-1  |
+keycloak-1  | Next time you run the server, just run:
+keycloak-1  |
+keycloak-1  |   kc.sh start --optimized
+keycloak-1  |
+keycloak-1  | Key material not provided to setup HTTPS. Please configure your keys/certificates or start the server in development mode.
+
